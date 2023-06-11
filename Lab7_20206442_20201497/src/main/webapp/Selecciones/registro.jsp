@@ -66,7 +66,7 @@
                         <input type="text" class="form-control" name="tecnico" id="tecnico">
                     </div>
                     <div class="mb-3">
-                        <label for="id_estadio" class="form-label">Selección</label>
+                        <label for="id_estadio" class="form-label">Estadio</label>
                         <div class="container">
                             <select class="custom-select" aria-label=".form-select-lg example" name ="id_estadio">
                                 <% for (Estadio e : estadios){ %>
