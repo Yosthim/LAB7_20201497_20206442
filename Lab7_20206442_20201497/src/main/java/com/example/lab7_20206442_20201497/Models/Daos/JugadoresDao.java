@@ -14,7 +14,8 @@ public class JugadoresDao extends DaoBase{
         ArrayList<Jugador> lista = new ArrayList<>();
 
         String sql = "SELECT * FROM jugador j\n" +
-                "left join seleccion s on j.sn_idSeleccion=s.idSeleccion;";
+                "inner join seleccion s on j.sn_idSeleccion = s.idSeleccion\n" +
+                "order by j.idJugador;";
 
         try(Connection connection = this.getConnection();
             Statement stmt = connection.createStatement();

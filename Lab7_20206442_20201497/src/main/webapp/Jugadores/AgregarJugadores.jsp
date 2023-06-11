@@ -55,27 +55,27 @@
             <main class="mb-auto col-12">
                 <h1>Agregar un nuevo jugador</h1>
 
-                <form method="POST" action="<%=request.getContextPath()%>/JugadorServlet">
-                    <div class="mb-3">
-                        <label for="nombre">Nombre</label>
-                        <input type="text" class="form-control" name="nombre" id="nombre">
-                    </div>
-                    <div class="mb-3">
-                        <label for="edad">Edad</label>
-                        <input type="number" class="form-control" name="edad" id="edad">
-                    </div>
-                    <div class="mb-3">
-                        <label for="posicion">Posición</label>
-                        <input type="text" class="form-control" step="1" name="posicion" id="posicion">
-                    </div>
-                    <div class="mb-3">
-                        <label for="club">Club</label>
-                        <input type="text" class="form-control" name="club" id="club">
-                    </div>
-                    <div class="mb-3">
-                        <label for="id_seleccion" class="form-label">Selección</label>
-                        <div class="container">
-                            <select class="custom-select" aria-label=".form-select-lg example" name ="id_seleccion">
+                <form method="POST" action="JugadorServlet?action=crear">
+                    <div class="mb-auto col-12 btn-xl mb-4">
+                        <div class="mb-3 ">
+                            <label for="nombre" class="form-label">Nombre</label>
+                            <input type="text" class="form-control" name="nombre" id="nombre" required pattern="^(?!\\s*$).+">
+                        </div>
+                        <div class="mb-3 btn-xl mb-4">
+                            <label for="edad" class="form-label">Edad</label>
+                            <input type="number"  class="form-control" name="edad" id="edad" min="1" required >
+                        </div>
+                        <div class="mb-3 btn-xl mb-4">
+                            <label for="posicion" class="form-label">Posición</label>
+                            <input type="text" class="form-control" step="1" name="posicion" id="posicion" required pattern="^(?!\\s*$).+">
+                        </div>
+                        <div class="mb-3 btn-xl mb-4">
+                            <label for="club" class="form-label">Club</label>
+                            <input type="text" class="form-control" name="club" id="club" required pattern="^(?!\\s*$).+">
+                        </div>
+                        <div class="mb-3 btn-xl mb-4">
+                            <label for="idSeleccion" class="form-label">Selección</label>
+                            <select class="form-select"  name ="idSeleccion" required>
                                 <% for (Seleccion s : selecciones){ %>
                                 <option  value="<%=s.getIdSeleccion()%>">
                                     <%=s.getNombre()%>
