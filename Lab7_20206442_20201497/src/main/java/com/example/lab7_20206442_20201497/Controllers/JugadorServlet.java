@@ -8,6 +8,7 @@ import jakarta.servlet.http.*;
 import jakarta.servlet.annotation.*;
 
 import java.io.IOException;
+import java.util.ArrayList;
 
 @WebServlet(name = "JugadorServlet", value = {"", "/JugadorServlet"})
 
@@ -44,41 +45,49 @@ public class JugadorServlet extends HttpServlet {
 
             case "crear":
 
-                Jugador jugador = parseJugador(request);
-                jugadoresDao.guardar(jugador);
-                response.sendRedirect(request.getContextPath() + "/JugadorServlet");
+                Boolean valida = validar(request, jugadoresDao.listaJugadores());
+                if (valida == true ){
+                    Jugador jugador = parseJugador(request );
+                    jugadoresDao.guardar(jugador);
+                    response.sendRedirect("JugadorServlet");
+                }else {
+                    response.sendRedirect("JugadorServlet?action=crear");
+                }
                 break;
         }
 
     }
-    public Jugador parseJugador(HttpServletRequest request){
+    public Jugador parseJugador(HttpServletRequest request ){
 
         Jugador jugador = new Jugador();
         Seleccion seleccio = new Seleccion();
 
-        String nombre = request.getParameter("nombre");
-        String edad = request.getParameter("edad");
-        String posicion = request.getParameter("posicion");
-        String club = request.getParameter("club");
-        String seleccion = request.getParameter("seleccion");
+        jugador.setNombre(request.getParameter("nombre").trim());
+        jugador.setEdad(Integer.parseInt(request.getParameter("edad")));
+        jugador.setPosicion(request.getParameter("posicion").trim());
+        jugador.setClub(request.getParameter("club").trim());
 
-        try{
-            int edad_int = Integer.parseInt((edad));
-            int seleccion_int = Integer.parseInt(seleccion);
+        seleccio.setIdSeleccion(Integer.parseInt((request.getParameter("idSeleccion"))));
 
-            jugador.setNombre(nombre);
-            jugador.setEdad(edad_int);
-            jugador.setPosicion(posicion);
-            jugador.setClub(club);
+        jugador.setSeleccion(seleccio);
 
-            seleccio.setIdSeleccion(seleccion_int);
-            jugador.setSeleccion(seleccio);
-
-            return jugador;
-        }catch (NumberFormatException e){
-
-        }
 
         return jugador;
+    }
+
+    public Boolean validar(HttpServletRequest request, ArrayList<Jugador> lista){
+        int r=0;
+        for(int i =0 ; i< lista.size() ; i++){
+
+            if(request.getParameter("nombre").trim().equals(lista.get(i).getNombre())){
+                r++;
+            }
+        }
+
+        if (r>0){
+            return false;
+        }
+
+        return true;
     }
 }
