@@ -107,7 +107,7 @@
                 </a>
             </li>
             <li class="nav-item ">
-                <a class="nav-link fs-5" href="<%=request.getContextPath()%>/JugadorServlet?action=lista" aria-label="A sample content page">
+                <a class="nav-link fs-5" href="<%=request.getContextPath()%>/listaSelecciones" aria-label="A sample content page">
                     Selecciones
                 </a>
             </li>

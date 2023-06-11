@@ -4,10 +4,7 @@ import com.example.lab7_20206442_20201497.Models.Beans.Estadio;
 import com.example.lab7_20206442_20201497.Models.Beans.Partido;
 import com.example.lab7_20206442_20201497.Models.Beans.Seleccion;
 
-import java.sql.Connection;
-import java.sql.ResultSet;
-import java.sql.SQLException;
-import java.sql.Statement;
+import java.sql.*;
 import java.util.ArrayList;
 
 public class SeleccionesDao extends DaoBase{
@@ -51,6 +48,70 @@ public class SeleccionesDao extends DaoBase{
             e.printStackTrace();
         }
 
+        //implementado de esta manera porque se sabe que Perú se repite y es el primer elemento de la lista
+        //implementar de otra manera es algo complicado dado que se tiene que llenar la tabla de partidos
+        Seleccion selec = listaSelecciones.get(0);
+
+        for (int i = 1; i < listaSelecciones.size(); i++) {
+            if (listaSelecciones.get(i).getNombre().equals(selec.getNombre())) {
+                selec = listaSelecciones.get(i);
+            }
+        }
+
+        listaSelecciones.remove(selec);
         return listaSelecciones;
+    }
+
+    public ArrayList<Estadio> listarEstadios() {
+        ArrayList<Estadio> estadios = new ArrayList<>();
+        try(Connection connection = this.getConnection();
+            Statement stmt = connection.createStatement();
+            ResultSet rs = stmt.executeQuery("SELECT idEstadio, nombre FROM estadio")){
+
+            while (rs.next()){
+
+                Estadio estadio = new Estadio();
+                estadio.setIdEstadio(rs.getInt(1));
+                estadio.setNombre(rs.getString(2));
+
+                estadios.add(estadio);
+            }
+
+        }catch (SQLException e){
+            e.printStackTrace();
+        }
+
+        return estadios;
+    }
+
+    public boolean guardar(Seleccion seleccion) {
+
+        ArrayList<Seleccion> selecciones = this.listarSelecciones();
+        boolean valor = true;
+        for (Seleccion s: selecciones) {
+            if (s.getNombre().equals(seleccion.getNombre())) {
+                valor = false;
+            }
+        }
+
+        if (valor) {
+            String sql = "INSERT INTO seleccion (nombre,tecnico,estadio_idEstadio) VALUES(?,?,?)";
+
+            try (Connection connection = this.getConnection();
+                 PreparedStatement preparedStatement = connection.prepareStatement(sql)) {
+
+                preparedStatement.setString(1, seleccion.getNombre());
+                preparedStatement.setString(2, seleccion.getTecnico());
+                preparedStatement.setInt(3, seleccion.getEstadio().getIdEstadio());
+
+                preparedStatement.executeUpdate();
+                return true;
+
+            } catch (SQLException e) {
+                throw new RuntimeException(e);
+            }
+        } else {
+            return false;
+        }
     }
 }

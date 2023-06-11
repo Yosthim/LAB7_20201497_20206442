@@ -1,5 +1,7 @@
+<%@ page import="com.example.lab7_20206442_20201497.Models.Beans.Seleccion" %>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-<jsp:useBean id="listaSelecciones" scope="request" type="java.util.ArrayList<com.example.lab7_20206442_20201497.Models.Beans.Seleccion>">
+<jsp:useBean id="listaSelecciones" scope="request" type="java.util.ArrayList<com.example.lab7_20206442_20201497.Models.Beans.Seleccion>"/>
+<!DOCTYPE html>
 <html class="h-100" lang="en">
 <head>
 
@@ -17,15 +19,15 @@
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width,initial-scale=1,shrink-to-fit=no">
     <meta name="description" content="A well made and handcrafted Bootstrap 5 template">
-    <link rel="apple-touch-icon" sizes="180x180" href="../Recursos/img/apple-touch-icon.png">
-    <link rel="icon" type="image/png" sizes="32x32" href="../Recursos/img/favicon-32x32.png">
-    <link rel="icon" type="image/png" sizes="16x16" href="../Recursos/img/favicon-16x16.png">
-    <link rel="icon" type="image/png" sizes="96x96" href="../Recursos/img/favicon.png">
+    <link rel="apple-touch-icon" sizes="180x180" href="Recursos/img/apple-touch-icon.png">
+    <link rel="icon" type="image/png" sizes="32x32" href="Recursos/img/favicon-32x32.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="Recursos/img/favicon-16x16.png">
+    <link rel="icon" type="image/png" sizes="96x96" href="Recursos/img/favicon.png">
     <meta name="author" content="Holger Koenemann">
     <meta name="generator" content="Eleventy v2.0.0">
     <meta name="HandheldFriendly" content="true">
     <title>Clasificatorias</title>
-    <link rel="stylesheet" href="../Recursos/css/theme.min.css">
+    <link rel="stylesheet" href="Recursos/css/theme.min.css">
     <style>
 
     /* inter-300 - latin */
@@ -93,7 +95,7 @@
                     </a>
                 </li>
                 <li class="nav-item ">
-                    <a class="nav-link fs-5" href="<%=request.getContextPath()%>/JugadorServlet?action=lista" aria-label="A sample content page">
+                    <a class="nav-link fs-5" href="<%=request.getContextPath()%>/listaSelecciones" aria-label="A sample content page">
                         Selecciones
                     </a>
                 </li>
@@ -101,13 +103,13 @@
         </div>
     </nav>
 
-    <main>
+<main>
         <div class="w-100 overflow-hidden position-relative bg-black text-white" data-aos="fade">
             <div class="position-absolute w-50 h-50 bg-black opacity-75 top-0 start-0"></div>
             <div class="container py-vh-1 position-relative mt-5 px-vw-1 text-center">
                 <div class="row d-flex align-items-center justify-content-center py-vh-5">
                     <div class="col-12 col-xl-20">
-                        <h1 class="display-huge mt-3 mb-3 lh-1">Lista de Jugadores</h1>
+                        <h1 class="display-huge mt-3 mb-3 lh-1">Lista de Selecciones</h1>
                     </div>
                     <div class="col-12 text-center">
 
@@ -115,61 +117,60 @@
                 </div>
             </div>
             <div class="container-fluid px-vw-5 position-relative" data-aos="fade">
-            <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
-            <div class="position-relative py-vh-5 bg-cover bg-center rounded-5" style="background-image: url(Recursos/img/webp/abstract12.webp)">
-            <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
-            <div class="row d-flex align-items-center">
+                <div class="position-absolute w-100 h-50 bg-black top-0 start-0"></div>
+                <div class="position-relative py-vh-5 bg-cover bg-center rounded-5" style="background-image: url(Recursos/img/webp/abstract12.webp)">
+                    <div class="container bg-black px-vw-5 py-vh-3 rounded-5 shadow">
+                        <div class="row d-flex align-items-center">
 
-            <table class="table table-striped table-dark">
-            <thead>
-            <tr>
-            <th scope="col">ID</th>
-            <th scope="col">Nombre</th>
-            <th scope="col">Edad</th>
-            <th scope="col">Possición</th>
-            <th scope="col">Club</th>
-            <th scope="col">Selección</th>
-            </tr>
-            </thead>
-            <tbody>
-            <%
-                for (Jugador jugador : lista){
+                        <table class="table table-striped table-dark">
+                            <thead>
+                            <tr>
+                                <th scope="col">ID</th>
+                                <th scope="col">Nombre</th>
+                                <th scope="col">Tecnico</th>
+                                <th scope="col">Estadio</th>
+                                <th scope="col">Primer Partido</th>
+                            </tr>
+                            </thead>
+                            <tbody>
+                            <%
+                                for (Seleccion seleccion : listaSelecciones){
 
-            %>
+                            %>
 
-            <tr>
-            <td><%=jugador.getIdJugador()%></td>
-            <td><%=jugador.getNombre()%></td>
-            <td><%=jugador.getEdad()%></td>
-            <td><%=jugador.getPosicion()%></td>
-            <td><%=jugador.getClub()%></td>
-            <td><%=jugador.getSeleccion().getNombre()%></td>
-            </tr>
-            <%
-                }
-            %>
+                            <tr>
+                                <td><%=seleccion.getIdSeleccion()%></td>
+                                <td><%=seleccion.getNombre()%></td>
+                                <td><%=seleccion.getTecnico()%></td>
+                                <td><%=seleccion.getEstadio().getNombre()%></td>
+                                <td>
+                                    <%=seleccion.getPrimerPartido().getLocal()+" vs "+seleccion.getPrimerPartido().getVisita()%>
+                                </td>
+                            </tr>
+                            <%
+                                }
+                            %>
 
-            </tbody>
-            </table>
-
-            </div>
-            </div>
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
 
             </div>
             <div class="col-12 text-center mx-8">
-            <a href="<%=request.getContextPath()%>/JugadorServlet?action=crear" class="btn btn-xl btn-light">Agregar
-            <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
-            <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
-            </svg>
-            </a>
+                <a href="<%=request.getContextPath()%>/listaSelecciones?act=reg" class="btn btn-xl btn-light">Agregar
+                    <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" class="bi bi-arrow-right" viewBox="0 0 16 16">
+                        <path fill-rule="evenodd" d="M1 8a.5.5 0 0 1 .5-.5h11.793l-3.147-3.146a.5.5 0 0 1 .708-.708l4 4a.5.5 0 0 1 0 .708l-4 4a.5.5 0 0 1-.708-.708L13.293 8.5H1.5A.5.5 0 0 1 1 8z"/>
+                    </svg>
+                </a>
             </div>
         </div>
-    </main>
+</main>
 
 
-
-    <div class="container text-center small py-vh-2 border-top border-dark table-container ">Made by
-    </div>
+<div class="container text-center small py-vh-2 border-top border-dark table-container ">Made by
+</div>
 
 
 
